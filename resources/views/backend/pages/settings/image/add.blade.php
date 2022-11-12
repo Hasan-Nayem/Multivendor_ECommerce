@@ -25,7 +25,7 @@
 					<div class="card">
 						<div class="card-header py-3 bg-transparent"> 
 						  <div class="d-sm-flex align-items-center">
-						    <h5 class="mb-2 mb-sm-0">Change Logo</h5>
+						    <h5 class="mb-2 mb-sm-0">Add A Logo</h5>
 						    </div>
 						</div>
 						<div class="card-body">
@@ -34,11 +34,20 @@
                                     <img src="" class="img-thumbnail my-2" alt="">
 									<div class="card shadow-none bg-light border">
 							          <div class="card-body">
-								            <div class="col-12">
+								            <div class="col-12 my-2">
 								                <label class="form-label">Logo Image</label>
 								                <input class="form-control" type="file" name="logo">
 								            </div>
-                                            <div class="col-12">
+											<div class="col-12 my-2">
+								                <label class="form-label">Define uses</label>
+								                <select name="type" id="" class="form-control">
+                                                    <option value="">Select Uses</option>
+                                                    <option value="1">Favicon</option>
+                                                    <option value="2">Top Logo</option>
+                                                    <option value="3">Footer Logo</option>
+                                                </select>
+								            </div>
+                                            <div class="col-12 my-2">
 								                <label class="form-label">Logo Status</label>
 								                <select name="status" id="" class="form-control">
                                                     <option value="">Select Status</option>

@@ -235,7 +235,7 @@
                   <a href="{{ route('settings.all') }}"><i class="bi bi-circle"></i>Global Settings</a>
                 </li>
                 <li> 
-                  <a href="app-chat-box.html">
+                  <a href="{{ route('settings.notice.manage') }}">
                     <i class="bi bi-circle"></i>Notice
                   </a>
                 </li>

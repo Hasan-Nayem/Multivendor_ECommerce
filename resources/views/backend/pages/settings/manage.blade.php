@@ -20,26 +20,23 @@
 
 		<div class="row">
 			<div class="col-lg-12 mx-auto">
-				<form class="row g-3" action="{{ route('settings.logo') }}" method="POST" enctype="multipart/form-data">
-					@csrf
 					<div class="card">
 						<div class="card-header py-3 bg-transparent"> 
 						  <div class="d-sm-flex align-items-center">
-						    <h5 class="mb-2 mb-sm-0">Change Logo</h5>
+						    <h5 class="mb-2 mb-sm-0">Ecommerce Logo</h5>
 						    </div>
 						</div>
 						<div class="card-body">
 						   	<div class="row g-3">
 						     	<div class="col-12 col-lg-12">
-                                    <img src="" class="img-thumbnail my-2" alt="">
 									<div class="card shadow-none bg-light border">
 							          <div class="card-body">
 								            <div class="col-12">
-								                <label class="form-label">Logo Image</label>
-								                <input class="form-control" type="file" name="logo">
+								                <label class="form-label">Current Logo</label>
+												<img src="{{ asset('frontend/assets/settings/logo/') }}" class="img-thumbnail my-2" alt="ecommerce logo">
 								            </div>
                                             <div class="col-3">
-								                <input class="form-control btn btn-primary my-2" type="submit" value="Change">
+								                <a href="{{ route('settings.logo.manage') }}" class="btn btn-primary">Change</a>
 								            </div>
 							          </div>
 							        </div>
@@ -52,23 +49,20 @@
 			</div>
 
             <div class="col-lg-12 mx-auto">
-				<form class="row g-3" action="" method="POST" enctype="multipart/form-data">
-					@csrf
 					<div class="card">
 						<div class="card-header py-3 bg-transparent"> 
 						  <div class="d-sm-flex align-items-center">
-						    <h5 class="mb-2 mb-sm-0">Change Favicon</h5>
+						    <h5 class="mb-2 mb-sm-0">Ecommerce Favicon</h5>
 						  	</div>
 						</div>
 						<div class="card-body">
 						   	<div class="row g-3">
 						     	<div class="col-12 col-lg-12">
-                                    <img src="" class="img-thumbnail my-2" alt="">
 							        <div class="card shadow-none bg-light border">
 							          <div class="card-body">
 								            <div class="col-12">
-								                <label class="form-label">Favicon Image</label>
-								                <input class="form-control" type="file" name="favicon">
+								                <label class="form-label">Current Favicon Image</label>
+												<img src="{{ asset('frontend/assets/settings/logo/') }}" class="img-thumbnail my-2" alt="favicon.ico">
 								            </div>
                                             <div class="col-3">
 								                <input class="form-control btn btn-primary my-2" type="submit" value="Change">
@@ -83,61 +77,34 @@
 				</form>
 
 				<div class="col-lg-12 mx-auto">
-				<form class="row g-3" action="" method="POST" enctype="multipart/form-data">
-					@csrf
 					<div class="card">
 						<div class="card-header py-3 bg-transparent"> 
 						  <div class="d-sm-flex align-items-center">
-						    <h5 class="mb-2 mb-sm-0">Sliders</h5>
+						    <h5 class="mb-2 mb-sm-0">Active Sliders</h5>
 						  	</div>
 						</div>
 						<div class="card-body">
 						   	<div class="row g-3">
 						     	<div class="col-12 col-lg-12">
-                                    <img src="" class="img-thumbnail mx-4 my-3" alt="">
+									@foreach($sliders as $slider)
+                                    <img src="{{ asset('frontend/assets/settings/slider/'. $slider->image)}}" style="max-width: 300px;" class="img-thumbnail mx-4 my-3" alt="">
+									@endforeach
 									<div class="card shadow-none bg-light border">
 							          <div class="card-body">
-
+											@php $sl = 1; @endphp
+									 	 	@foreach($sliders as $slider)
 											<div class="col-12">
-								                <label class="form-label">Slider 1 Head</label>
-								                <input class="form-control" type="text" name="slider1-head">
+								                <label class="form-label">Slider {{ $sl }} Head</label>
+								                <input class="form-control" type="text" name="" value="{{ $slider->head }}" disabled>
 								            </div>
 											<div class="col-12">
-								                <label class="form-label">Slider 1 Sub Head</label>
-								                <input class="form-control" type="text" name="slider1-s-head">
+								                <label class="form-label">Slider {{ $sl }} Sub Head</label>
+								                <input class="form-control" type="text" name="" value="{{ $slider->subHead }}" disabled>
 								            </div>
-											<div class="col-12">
-								                <label class="form-label">Slider 1 Image</label>
-								                <input class="form-control" type="file" name="slider1-image">
-								            </div>
-
-											<div class="col-12">
-								                <label class="form-label">Slider 2 Head</label>
-								                <input class="form-control" type="text" name="slider2-head">
-								            </div>
-											<div class="col-12">
-								                <label class="form-label">Slider 2 Sub Head</label>
-								                <input class="form-control" type="text" name="slider2-s-head">
-								            </div>
-											<div class="col-12">
-								                <label class="form-label">Slider 2 Image</label>
-								                <input class="form-control" type="file" name="slider2-image">
-								            </div>
-
-											<div class="col-12">
-								                <label class="form-label">Slider 3 Head</label>
-								                <input class="form-control" type="text" name="slider3-head">
-								            </div>
-											<div class="col-12">
-								                <label class="form-label">Slider 3 Sub Head</label>
-								                <input class="form-control" type="text" name="slider3-s-head">
-								            </div>
-											<div class="col-12">
-								                <label class="form-label">Slider 3 Image</label>
-								                <input class="form-control" type="file" name="slider3-image">
-								            </div>
+											@php $sl++; @endphp
+											@endforeach
                                             <div class="col-3">
-								                <input class="form-control btn btn-primary my-2" type="submit" value="Change">
+												<a href="{{ route('settings.slider.manage') }}" class="btn btn-primary my-3">View All Slider</a>
 								            </div>
 							          
 										</div>
@@ -147,7 +114,6 @@
 					   </div><!--end row-->
 					 </div>
 					</div>
-				</form>
 
 				<div class="row">
 					<div class="col-lg-12 mx-auto">
@@ -181,7 +147,7 @@
 														<input class="form-control" type="text" name="b-hours">
 													</div>
 													<div class="col-3">
-														<input class="form-control btn btn-primary my-2" type="submit" value="Change">
+														<a href="{{ route('settings.slider.manage') }}" class="btn btn-primary">View All Address</a>
 													</div>
 											</div>
 											</div>
@@ -190,13 +156,10 @@
 							</div><!--end row-->
 							</div>
 							</div>
-						</form>
 					</div>
 
 					<div class="row">
 					<div class="col-lg-12 mx-auto">
-						<form class="row g-3" action="" method="POST" enctype="multipart/form-data">
-							@csrf
 							<div class="card">
 								<div class="card-header py-3 bg-transparent"> 
 								<div class="d-sm-flex align-items-center">
@@ -209,15 +172,14 @@
 											<div class="card shadow-none bg-light border">
 											<div class="card-body">
 													<div class="col-12">
-														<label class="form-label">Published Notice</label>
-														<textarea name="" id="" cols="30" rows="5" class="form-control" disabled></textarea>
-													</div>
-													<div class="col-12">
-														<label class="form-label">Edit Notice <span class="badge bg-danger text-black">Separate each line with | this sign</span></label>
-														<input class="form-control" type="text" name="notice" placeholder="Notice 1 | Notice 2 | Notice 3.....">
+														<label class="form-label">Active Published Notice</label>
+														@foreach($notices = \App\Models\Notice::get()->where('status',1) as $notice)
+														<input type="text" value="{{ $notice->notice }}" class="form-control my-2" disabled>
+														@endforeach
+														
 													</div>
 													<div class="col-3">
-														<input class="form-control btn btn-primary my-2" type="submit" value="Change">
+														<a href="{{ route('settings.notice.manage') }}" class="btn btn-primary">View all notice</a>
 													</div>
 											</div>
 											</div>

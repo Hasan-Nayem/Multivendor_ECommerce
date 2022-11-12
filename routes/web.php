@@ -169,17 +169,48 @@ Route::group(['prefix' => 'admin'] , function(){
     Route::group(['prefix' => '/settings'],function(){
         Route::get('/manage', [SettingsController::class, "index"])->middleware(['auth'])->name('settings.all');
         Route::get('/notice', [SettingsController::class, "notice"])->middleware(['auth'])->name('settings.notice.manage');
+        
+
+
+
         Route::group(['prefix'=> 'images'], function(){
-            Route::get('/logo',[SettingsController::class,'logoIndex'])->middleware(['auth'])->name('settings.logo');
+            // Route::get('/logo',[SettingsController::class,'logoIndex'])->middleware(['auth'])->name('settings.logo');
+
+            Route::get('/manage',[SettingsController::class,'logoIndex'])->middleware(['auth'])->name('settings.logo.manage');
+            Route::get('/create',[SettingsController::class,'logoCreate'])->middleware(['auth'])->name('settings.logo.create');
             Route::post('/add',[SettingsController::class,'logoAdd'])->middleware(['auth'])->name('settings.logo.add');
-            Route::get('/manage',[SettingsController::class,'logoManage'])->middleware(['auth'])->name('settings.logo.manage');
+            Route::get('/edit/{id}',[SettingsController::class,'logoEdit'])->middleware(['auth'])->name('settings.logo.edit');
+            Route::post('/update/{id}',[SettingsController::class,'logoUpdate'])->middleware(['auth'])->name('settings.logo.update');
+            Route::get('/delete/{id}',[SettingsController::class,'logoDelete'])->middleware(['auth'])->name('settings.logo.delete');
+            
+        });
+
+
+
+
+
+        Route::group(['prefix' => 'notice'],function(){
+            Route::get('/manage',[SettingsController::class,"noticeIndex"])->middleware(['auth'])->name('settings.notice.manage');
+            Route::get('/create',[SettingsController::class,"noticeCreate"])->middleware(['auth'])->name('settings.notice.create');
+            Route::post('/store',[SettingsController::class,"noticeStore"])->middleware(['auth'])->name('settings.notice.store');
+            Route::get('/edit/{id}',[SettingsController::class,"noticeEdit"])->middleware(['auth'])->name('settings.notice.edit');
+            Route::post('/update/{id}',[SettingsController::class,"noticeUpdate"])->middleware(['auth'])->name('settings.notice.update');
+            Route::get('/delete/{id}',[SettingsController::class,"noticeDelete"])->middleware(['auth'])->name('settings.notice.delete');
+        });
+
+        Route::group(['prefix' => 'slider'],function(){
+            Route::get('/manage',[SettingsController::class,"sliderIndex"])->middleware(['auth'])->name('settings.slider.manage');
+            Route::get('/create',[SettingsController::class,"sliderCreate"])->middleware(['auth'])->name('settings.slider.create');
+            Route::post('/store',[SettingsController::class,"sliderStore"])->middleware(['auth'])->name('settings.slider.store');
+            Route::get('/edit/{id}',[SettingsController::class,"sliderEdit"])->middleware(['auth'])->name('settings.slider.edit');
+            Route::post('/update/{id}',[SettingsController::class,"sliderUpdate"])->middleware(['auth'])->name('settings.slider.update');
+            Route::get('/delete/{id}',[SettingsController::class,"sliderDelete"])->middleware(['auth'])->name('settings.slider.delete');
+
         });
 
     });
 
 });
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');

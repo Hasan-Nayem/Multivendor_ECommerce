@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('settings_images', function (Blueprint $table) {
+        Schema::create('sliders', function (Blueprint $table) {
             $table->id();
-            $table->text('image_name');
-            $table->integer('image_type')->comment('type 1 = logo, type 2 = favicon, type 3 = slider');
-            $table->integer('status')->comment('0 = Inactive,1 = active, type 3 = slider');
+            $table->text('head');
+            $table->text('subHead');
+            $table->text('image');
+            $table->integer('status');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings_images');
+        Schema::dropIfExists('sliders');
     }
 };

@@ -19,9 +19,14 @@
                         <div class="text-center">
                             <div id="news-flash" class="d-inline-block">
                                 <ul>
-                                    <li>100% Secure delivery without contacting the courier</li>
+
+                                    @foreach($notices = \App\Models\Notice::get()->where('status',1) as $notice)
+                                        <li>{{ $notice->notice }}</li>    
+                                    @endforeach
+                                    <!-- <li>100% Secure delivery without contacting the courier</li>
                                     <li>Supper Value Deals - Save more with coupons</li>
-                                    <li>Trendy 25silver jewelry, save up 35% off today</li>
+                                    <li>Trendy 25silver jewelry, save up 35% off today</li> -->
+
                                 </ul>
                             </div>
                         </div>
@@ -68,7 +73,10 @@
             <div class="container">
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
-                        <a href="{{ route('homePage') }}"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a>
+                        <!-- <a href="{{ route('homePage') }}"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a> -->
+                        @php $image = \App\Models\Settings::where('type',2)->where('status',1)->get(); @endphp 
+                         <a href="{{ route('homePage') }}"><img src="{{ asset('frontend/assets/settings/logo/')}}" alt="logo" /></a>
+                        @endphp
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
