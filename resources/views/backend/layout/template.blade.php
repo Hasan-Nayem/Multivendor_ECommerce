@@ -29,5 +29,6 @@
     <!--end wrapper-->
 
     @include ('backend.includes.scripts') 
+    @include('sweetalert::alert')
   </body>
 </html>

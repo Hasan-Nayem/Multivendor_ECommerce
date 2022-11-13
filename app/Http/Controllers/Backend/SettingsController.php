@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\Settings;
 use App\Models\Notice;
 use App\Models\Slider;
+use App\Models\Info;
 use File;
 use Image;
 
@@ -16,9 +18,9 @@ class SettingsController extends Controller
     //Whole manage at a glance
     public function index(){
         $sliders = Slider::where('status',1)->get();
-        $logo = Settings::where('status',1)->where('type',2)->get();
-        $favicon = Settings::where('status',1)->where('type',1)->get();
-        $footer = Settings::where('status',1)->where('type',3)->get();
+        $logo = Settings::where('status',1)->where('type',2)->first();
+        $favicon = Settings::where('status',1)->where('type',1)->first();
+        $footer = Settings::where('status',1)->where('type',3)->first();
         // dd($sliders,$logo,$favicon,$footer);
         return view('backend.pages.settings.manage',compact('sliders','logo','footer','favicon'));
     }
@@ -66,38 +68,62 @@ class SettingsController extends Controller
 
     public function logoEdit(Request $request,$id){
         $data = Settings::find($id);
-        return view('backend.pages.settings.logo.edit',compact('data'));
+        Alert::warning('WAIT A SECOUND!!!', 'If You Want To Update The Image Type, Don\'t Change The Image Type. Its Better To Delete This One And Upload It Correctly. Thanks!!');
+        return view('backend.pages.settings.image.edit',compact('data'));
     }
 
     public function logoUpdate(Request $request,$id){
         $data = Settings::find($id);
+        // dd($request->all());exit();
         $data->status = $request->status;
-        if($request->logo){
-            if ( File::exists('frontend/assets/settings/logo/' . $data->image_name ) ){
-                File::delete('frontend/assets/settings/logo/' . $data->image_name);
+        $data->type = $request->type;
+
+        if($request->type == 1){
+            $image_location = 'frontend/assets/settings/favicon/';
+        }else if($request->type == 2){
+            $image_location = 'frontend/assets/settings/logo/';
+        }else if($request->type == 3){
+            $image_location = 'frontend/assets/settings/footer/';
+        }
+
+        if(!is_null($request->logo)){
+
+            if ( File::exists($image_location . $data->image_name ) ){
+                File::delete($image_location . $data->image_name);
             }
+
             $image = $request->file('logo');
             $img = time() . '.' . $image->getClientOriginalExtension();
-            $location = public_path('frontend/assets/settings/logo/' . $img);
+            $location = public_path($image_location . $img);
             Image::make($image)->save($location);
-            $data->image_name = $img;
-        }
-        $data->image_type = 1;
-        $data->status = $request->status;
+            $data->image = $img;
+
+        }        
         $data->save();
         $notification = array(
             'alert-type'    => 'success',
             'message'       => 'A New Ecommerce Logo Updated Successfully'
         );
 
-        return redirect()->route('settings.logo')->with($notification);
+        return redirect()->route('settings.logo.manage')->with($notification);
     }
 
-    public function logoDelete(Request $request,$id){
+    public function logoDelete($id){
         $data = Settings::find($id);
+        
+        //determine the actual file location 
+        if($data->type == 1){
+            $image_location = 'frontend/assets/settings/favicon/';
+        }else if($data->type == 2){
+            $image_location = 'frontend/assets/settings/logo/';
+        }else if($data->type == 3){
+            $image_location = 'frontend/assets/settings/footer/';
+        }
+
         // Delete Existing Image
-        if ( File::exists('frontend/assets/settings/logo/' . $data->image_name) ){
-            File::delete('frontend/assets/settings/logo/' . $data->image_name);
+
+        if ( File::exists($image_location . $data->image_name) ){
+            File::delete($image_location . $data->image_name);
         }
         $data->delete();
         $notification = array(
@@ -105,7 +131,7 @@ class SettingsController extends Controller
             'message'       => 'A New Ecommerce Logo deleted Successfully'
         );
 
-        return redirect()->route('settings.logo')->with($notification);
+        return redirect()->route('settings.logo.manage')->with($notification);
     }
     //logo, favicon, footer icon end
 
@@ -228,6 +254,66 @@ class SettingsController extends Controller
         );
 
         return redirect()->route('settings.slider.manage')->with($notification);
+    }
+    //Slider End
+
+    //Info Start
+    public function infoIndex(){
+        $info = Info::get();
+        return view('backend.pages.settings.info.manage',compact('info'));
+    }
+    public function infoCreate(){
+        return view('backend.pages.settings.info.add');
+    }
+    public function infoStore(Request $request){
+    //    dd($request);exit();
+       $info = new Info();
+       $info->email = $request->email;
+       $info->address = $request->address;
+       $info->ho = $request->ho;
+       $info->support = $request->support;
+       $info->b_hours = $request->b_hours;
+       $info->status = $request->status;
+       $info->save();
+        $notification = array(
+            'alert-type'    => 'success',
+            'message'       => 'A ecommerce info stack created Successfully'
+        );
+
+        return redirect()->route('settings.info.manage')->with($notification);
+    }  
+
+    public function infoEdit($id){
+        $info = Info::find($id);
+        // dd($info);exit();
+        return view('backend.pages.settings.info.edit',compact('info'));
+    } 
+
+    public function infoUpdate(Request $request,$id){
+        $info = Info::find($id);
+        $info->email = $request->email;
+        $info->address = $request->address;
+        $info->ho = $request->ho;
+        $info->support = $request->support;
+        $info->b_hours = $request->b_hours;
+        $info->status = $request->status;
+        $info->save();
+        $notification = array(
+            'alert-type'    => 'info',
+            'message'       => 'A ecommerce slider updated Successfully'
+        );
+
+        return redirect()->route('settings.info.manage')->with($notification);
+    }
+    public function infoDelete($id){
+        $info = Info::find($id);
+        $info->delete();
+        $notification = array(
+            'alert-type'    => 'error',
+            'message'       => 'A ecommerce information deleted Successfully'
+        );
+
+        return redirect()->route('settings.info.manage')->with($notification);
     }
     //Slider End
 }

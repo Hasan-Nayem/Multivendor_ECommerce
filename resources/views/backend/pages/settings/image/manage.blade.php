@@ -57,10 +57,10 @@
                                         <td>{{ $image->created_at }}</td>
 		                          		<td>
 				                            <div class="table-actions d-flex align-items-center gap-3 fs-6">
-				                              <a href="" class="text-warning">
+				                              <a href="{{ route('settings.logo.edit',$image->id) }}" class="text-warning">
 				                              	<i class="bi bi-pencil-fill"></i>
 				                              </a>
-				                              <a href="" class="text-danger" onclick="return confirm('Are you sure you want to delete this?')">
+				                              <a href="{{ route('settings.logo.delete',$image->id) }}" class="text-danger" onclick="return confirm('Are you sure you want to delete this?')">
 				                              	<i class="bi bi-trash-fill" ></i>
 				                              </a>
 				                            </div>

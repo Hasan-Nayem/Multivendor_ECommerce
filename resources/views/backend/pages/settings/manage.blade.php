@@ -32,8 +32,8 @@
 									<div class="card shadow-none bg-light border">
 							          <div class="card-body">
 								            <div class="col-12">
-								                <label class="form-label">Current Logo</label>
-												<img src="{{ asset('frontend/assets/settings/logo/') }}" class="img-thumbnail my-2" alt="ecommerce logo">
+								                <label class="form-label">Current Logo</label> <br>
+												<img src="{{ asset('frontend/assets/settings/logo/'.$logo->image) }}" class="img-thumbnail my-2" alt="ecommerce logo">
 								            </div>
                                             <div class="col-3">
 								                <a href="{{ route('settings.logo.manage') }}" class="btn btn-primary">Change</a>
@@ -61,8 +61,8 @@
 							        <div class="card shadow-none bg-light border">
 							          <div class="card-body">
 								            <div class="col-12">
-								                <label class="form-label">Current Favicon Image</label>
-												<img src="{{ asset('frontend/assets/settings/logo/') }}" class="img-thumbnail my-2" alt="favicon.ico">
+								                <label class="form-label">Current Favicon Image</label> <br>
+												<img src="{{ asset('frontend/assets/settings/favicon/'.$favicon->image) }}" class="img-thumbnail my-2" alt="favicon.ico">
 								            </div>
                                             <div class="col-3">
 								                <input class="form-control btn btn-primary my-2" type="submit" value="Change">
@@ -132,22 +132,26 @@
 											<div class="card-body">
 													<div class="col-12">
 														<label class="form-label">Email</label>
-														<input class="form-control" type="email" name="email">
+														<input class="form-control" type="email" name="email" disabled value="{{ \App\Models\Info::get()->where('status',1)->first()->email }}">
 													</div>
 													<div class="col-12">
 														<label class="form-label">Address</label>
-														<input class="form-control" type="text" name="address">
+														<input class="form-control" type="text" name="address" disabled value="{{ \App\Models\Info::get()->where('status',1)->first()->address }}">
 													</div>
 													<div class="col-12">
-														<label class="form-label">Fax</label>
-														<input class="form-control" type="text" name="fax">
+														<label class="form-label">Head office number</label>
+														<input class="form-control" type="text" name="ho" disabled value="{{ \App\Models\Info::get()->where('status',1)->first()->ho }}">
 													</div>
 													<div class="col-12">
-														<label class="form-label">Business Hours</label>
-														<input class="form-control" type="text" name="b-hours">
+														<label class="form-label">Support center number with working hours</label>
+														<input class="form-control" type="text" name="support" disabled value="{{ \App\Models\Info::get()->where('status',1)->first()->support }}">
+													</div>
+													<div class="col-12">
+														<label class="form-label">Business Hours with weekly day</label>
+														<input class="form-control" type="text" name="b_hours" disabled value="{{ \App\Models\Info::get()->where('status',1)->first()->b_hours }}">
 													</div>
 													<div class="col-3">
-														<a href="{{ route('settings.slider.manage') }}" class="btn btn-primary">View All Address</a>
+														<a href="{{ route('settings.info.manage') }}" class="btn btn-primary my-2">View All Address</a>
 													</div>
 											</div>
 											</div>

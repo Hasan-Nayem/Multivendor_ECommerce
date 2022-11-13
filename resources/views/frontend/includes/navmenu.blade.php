@@ -34,7 +34,7 @@
                     <div class="col-xl-3 col-lg-4">
                         <div class="header-info header-info-right">
                             <ul>
-                                <li>Need help? Call Us: <strong class="text-brand"> + 1800 900</strong></li>
+                                <li>Need help? Call Us: <strong class="text-brand"> {{ \App\Models\Info::get()->where('status',1)->first()->support }}</strong></li>
                                 <li>
                                     <a class="language-dropdown-active" href="#">English <i class="fi-rs-angle-small-down"></i></a>
                                     <ul class="language-dropdown">
@@ -73,10 +73,7 @@
             <div class="container">
                 <div class="header-wrap">
                     <div class="logo logo-width-1">
-                        <!-- <a href="{{ route('homePage') }}"><img src="{{ asset('frontend/assets/imgs/theme/logo.svg') }}" alt="logo" /></a> -->
-                        @php $image = \App\Models\Settings::where('type',2)->where('status',1)->get(); @endphp 
-                         <a href="{{ route('homePage') }}"><img src="{{ asset('frontend/assets/settings/logo/')}}" alt="logo" /></a>
-                        @endphp
+                            <a href="{{ route('homePage') }}"><img src="{{ asset('frontend/assets/settings/logo/'.\App\Models\Settings::where('status',1)->where('type',2)->first()->image )}}" alt="logo" /></a>
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
@@ -498,7 +495,7 @@
                     </div>
                     <div class="hotline d-none d-lg-flex">
                         <img src="{{ asset('frontend/assets/imgs/theme/icons/icon-headphone.svg') }}" alt="hotline" />
-                        <p>1900 - 888<span>24/7 Support Center</span></p>
+                        <p>{{ \App\Models\Info::get()->where('status',1)->first()->support }}<span>24/7 Support Center</span></p>
                     </div>
                     <div class="header-action-icon-2 d-block d-lg-none">
                         <div class="burger-icon burger-icon-white">

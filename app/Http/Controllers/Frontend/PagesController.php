@@ -12,6 +12,7 @@ use App\Models\Division;
 use App\Models\District;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Settings;
 use Auth;
 use File;
 use Image;
@@ -26,8 +27,11 @@ class PagesController extends Controller
     public function homePage()
     {
 
+        $logo = Settings::where('status',1)->where('type',2)->first();
+        $favicon = Settings::where('status',1)->where('type',1)->first();
+        $footer = Settings::where('status',1)->where('type',3)->first();
         $products = Product::orderBy('id', 'desc')->where('status', 1)->get();
-        return view('frontend.pages.homepage', compact('products'));
+        return view('frontend.pages.homepage', compact('products','logo','favicon','footer'));
     }
 
     /**

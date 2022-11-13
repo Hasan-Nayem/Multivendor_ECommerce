@@ -208,6 +208,16 @@ Route::group(['prefix' => 'admin'] , function(){
 
         });
 
+        Route::group(['prefix' => 'info'],function(){
+            Route::get('/manage',[SettingsController::class,"infoIndex"])->middleware(['auth'])->name('settings.info.manage');
+            Route::get('/create',[SettingsController::class,"infoCreate"])->middleware(['auth'])->name('settings.info.create');
+            Route::post('/store',[SettingsController::class,"infoStore"])->middleware(['auth'])->name('settings.info.store');
+            Route::get('/edit/{id}',[SettingsController::class,"infoEdit"])->middleware(['auth'])->name('settings.info.edit');
+            Route::post('/update/{id}',[SettingsController::class,"infoUpdate"])->middleware(['auth'])->name('settings.info.update');
+            Route::get('/delete/{id}',[SettingsController::class,"infoDelete"])->middleware(['auth'])->name('settings.info.delete');
+
+        });
+
     });
 
 });

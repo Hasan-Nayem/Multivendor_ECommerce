@@ -31,12 +31,27 @@
 						<div class="card-body">
 						   	<div class="row g-3">
 						     	<div class="col-12 col-lg-12">
-                                    <img src="{{ asset('frontend/assets/settings/logo/'.$data->image_name) }}" class="img-thumbnail my-2" alt="">
+									@if($data->type == 1)
+										<img src="{{ asset('frontend/assets/settings/favicon/'.$data->image) }}" class="img-thumbnail my-2" alt="">
+									@elseif($data->type == 2)
+										<img src="{{ asset('frontend/assets/settings/logo/'.$data->image) }}" class="img-thumbnail my-2" alt="">
+									@else
+                                    	<img src="{{ asset('frontend/assets/settings/footer/'.$data->image) }}" class="img-thumbnail my-2" alt="">
+									@endif
 									<div class="card shadow-none bg-light border">
 							          <div class="card-body">
 								            <div class="col-12">
 								                <label class="form-label">Logo Image</label>
-								                <input class="form-control" type="file" name="logo" value="{{ $data->image_name }}">
+								                <input class="form-control" type="file" name="logo" value="{{ $data->image }}">
+								            </div>
+											<div class="col-12 my-2">
+								                <label class="form-label">Define uses</label>
+								                <select name="type" id="" class="form-control">
+                                                    <option value="">Select Uses</option>
+                                                    <option value="1"@if($data->type == '1') SELECTED @endif>Favicon</option>
+                                                    <option value="2"@if($data->type == '2') SELECTED @endif>Top Logo</option>
+                                                    <option value="3"@if($data->type == '3') SELECTED @endif>Footer Logo</option>
+                                                </select>
 								            </div>
                                             <div class="col-12">
 								                <label class="form-label">Logo Status</label>
